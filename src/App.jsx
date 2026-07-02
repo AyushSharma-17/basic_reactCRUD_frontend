@@ -1,36 +1,40 @@
-import React, { useEffect, useState } from "react";
-import axios from "axios";
+import React,{useEffect,useState} from 'react';
+import { getStudents } from './studentService';
 
-function App() {
-  const [students, setStudents] = useState([]);
+function App(){
 
-  // fetch students from backend
-  const fetchStudents = async () => {
-    try {
-      const res = await axios.get("http://localhost:8080/students");
+   const[students,setStudents]= useState([]);
+   const [form ,setForm]= useState({name:" ",age:" "});
+       
+   //fetch students
+   const fetchStudents= async()=>{
+    try{
+      const res= await getStudents();
       setStudents(res.data);
-    } catch (err) {
+    }catch(err){
       console.error("Error fetching students:", err);
     }
-  };
+   };
 
-  useEffect(() => {
-    fetchStudents(); // ✅ correct function name
-  }, []);
+   useEffect(()=>{
+    fetchStudents();
+   },[])
 
-  return (
-    <>
-      <h1>hello react</h1>
+
+
+  return(
+    <div style={{textAlign:"center", padding:"20px"}}>
+      <h1>Student CRUD</h1>
+      <h2>Students List</h2>
       <ul>
-        {Array.isArray(students) &&
-          students.map((student) => (
-            <li key={student.id}>
-              {student.name} - {student.age}
-            </li>
-          ))}
+        {students.map((student) => (
+          <li key={student.id}>
+            Name: {student.name}, Age: {student.age}
+          </li>
+        ))}
       </ul>
-    </>
-  );
-}
 
+    </div>
+  )
+}
 export default App;
