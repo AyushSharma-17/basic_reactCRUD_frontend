@@ -29,8 +29,9 @@ function App(){
    };
 
    // update student
-   const handleUpdate= async (id, updatedStudent)=>{
-    await updateStudent(id, updatedStudent);
+   const handleUpdate= async (id)=>{
+    const updated={...form,id};
+    await updateStudent(id,updated);
     fetchStudents();
    };
 
@@ -69,7 +70,7 @@ function App(){
         {students.map((student) => (
           <li key={student.id}>
             Name: {student.name}, Age: {student.age}
-            <button onClick={()=>handleUpdate(student.id)}>Update</button>
+            <button onClick={()=>handleUpdate(student.id , )}>Update</button>
             <button onClick={()=>handleDelete(student.id)}>Delete</button>
           </li>
         ))}
