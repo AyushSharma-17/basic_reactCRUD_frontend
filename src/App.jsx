@@ -1,5 +1,5 @@
 import React,{useEffect,useState} from 'react';
-import { getStudents,addStudent } from './studentService';
+import { getStudents,addStudent,updateStudent, deleteStudent } from './studentService';
 
 function App(){
 
@@ -28,6 +28,18 @@ function App(){
     fetchStudents();
    };
 
+   // update student
+   const handleUpdate= async (id, updatedStudent)=>{
+    await updateStudent(id, updatedStudent);
+    fetchStudents();
+   };
+
+   //delete student
+   const handleDelete= async(id)=>{
+    await deleteStudent(id);
+    fetchStudents();
+   };
+
 
 
   return(
@@ -51,11 +63,14 @@ function App(){
         />
         <button type="submit">Add Student</button>
       </form>
-
+                {/* student list*/ }
+                <h2>Students</h2>
       <ul>
         {students.map((student) => (
           <li key={student.id}>
             Name: {student.name}, Age: {student.age}
+            <button onClick={()=>handleUpdate(student.id)}>Update</button>
+            <button onClick={()=>handleDelete(student.id)}>Delete</button>
           </li>
         ))}
       </ul>
